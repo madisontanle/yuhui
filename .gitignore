@@ -1,0 +1,9 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+# 运行时产物（程序首次播放时会自动重新生成）
+release/win-x64/generated-audio/
+release/win-x64/yuhui.settings.json
