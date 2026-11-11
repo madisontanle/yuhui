@@ -115,7 +115,9 @@ public partial class MainWindow : Window
         var (sunrise, calculatedSunset) = SolarCalculator.GetSunTimes(now.Date, point.Latitude, point.Longitude, TimeZoneInfo.Local);
         var sunset = _weatherSunset?.Date == now.Date ? _weatherSunset.Value : calculatedSunset;
         var fraction = Math.Clamp((now - sunrise).TotalMinutes / (sunset - sunrise).TotalMinutes, 0d, 1d);
-        var stage = fraction switch { < .18 => "清晨", < .64 => "下午", < .89 => "黄金时刻", _ => "蓝调时刻" };
+        var stage = now < sunrise ? "黎明"
+            : fraction switch { < .12 => "清晨", < .48 => "上午", < .55 => "正午", < .80 => "下午", _ => "黄金时刻" };
+        if (now >= sunset) stage = "蓝调时刻";
         var remaining = sunset - now;
         ClockText.Text = now.ToString("HH:mm");
         CityText.Text = $"余晖 · {city}";
